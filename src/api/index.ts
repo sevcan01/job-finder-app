@@ -1,5 +1,5 @@
 export const fetchJobListings = async (): Promise<any[]> => {
-    const response = await fetch('https://novel-project-ntj8t.ampt.app/jobs');
+    const response = await fetch('https://novel-project-ntj8t.ampt.app/swagger/');
     if (!response.ok) {
       throw new Error('Failed to fetch job listings');
     }

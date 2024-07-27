@@ -1,41 +1,49 @@
 import React from 'react';
 import Modal from 'react-modal';
+import CustomButton from '../CustomButton';
 
-interface SignUpModalProps {
+interface LoginModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
 }
 
-const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onRequestClose }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose }) => {
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      contentLabel="Sign Up Modal"
+      contentLabel="Login Modal"
       className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
       overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-50"
     >
-      <div className="bg-white p-8 rounded shadow-md max-w-sm w-full">
-        <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
-        <form>
-          <label className="block mb-2">
-            Name
-            <input type="text" className="border border-gray-300 p-2 w-full" />
+      <div className="bg-white p-8 rounded shadow-md max-w-sm w-full relative">
+        <button onClick={onRequestClose} className="absolute top-4 right-4 text-black text-2xl font-bold">
+        
+          <img src="/path-to-close-icon.svg" width={25} alt="Close" />
+        
+        </button>
+        <h2 className="text-2xl font-bold mb-6 text-center">SIGN UP</h2>
+        <form className="space-y-4">
+     
+          <label className="block">
+            <span className="text-gray-700">Email</span>
+            <input type="email" className="border border-black p-2 w-full mt-1" placeholder="hr@shft.co" />
           </label>
-          <label className="block mb-2">
-            Email
-            <input type="email" className="border border-gray-300 p-2 w-full" />
+          <label className="block">
+            <span className="text-gray-700">Password</span>
+            <input type="password" className="border border-black p-2 w-full mt-1" placeholder="******" />
           </label>
-          <label className="block mb-4">
-            Password
-            <input type="password" className="border border-gray-300 p-2 w-full" />
-          </label>
-          <button type="submit" className="bg-black text-white px-4 py-2 rounded">Sign Up</button>
+          <div className="flex justify-center py-4">
+          <CustomButton onClick={()=>{}} buttonColor="white" textColor="black" label="Sign Up" width="200px" height='50'/>
+          </div>
         </form>
-        <button onClick={onRequestClose} className="mt-4 text-red-500">Close</button>
+        <div className="text-center mt-4">
+          <span className="text-gray-600">Already have an account?  </span>
+          <a href="#" className="text-blue-600">Login</a>
+        </div>
       </div>
     </Modal>
   );
 };
 
-export default SignUpModal;
+export default LoginModal;

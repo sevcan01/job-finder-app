@@ -4,10 +4,13 @@ import { fetchJobListings } from '../api';
 import JobItem from '../components/Job/JobItem';
 
 const JobListingsPage: React.FC = () => {
-  const { data, error, isLoading } = useQuery(['jobListings'], fetchJobListings);
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['jobListings'],
+    queryFn: fetchJobListings,
+  });
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading jobs</div>;
+  if (error instanceof Error) return <div>Error loading jobs: {error.message}</div>;
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
