@@ -34,31 +34,29 @@ const JobItem: React.FC<JobItemProps> = ({ job }) => {
 
   return (
     <>
-   
-    <main className="flex flex-col bg-white items-end   mr-4">
-    <div className="flex space-x-4 ">
-    </div>
-  </main>
-    <div className="bg-white p-4 rounded border-2 border-black flex items-start">
-    <div className="mr-4">
-      <img src="/work-svgrepo-com.svg" alt="work" width={25} />
-    </div>
-    <div className="flex-grow">
-      <h2 className="text-xl font-bold">{job.companyName} - {job.name}</h2>
-      <p className="text-black max-w-[40ch]">{job.description}</p>
-      <p>Location: {job.location}</p>
-      <p>Salary: {job.salary}$</p>
-      <div className="flex gap-2  mt-2">
-        <button className="border  ">ipsum</button>
-        <button className="border ">dolar</button>
-        <button className="border  ">ipsum</button>
+    <main className="flex flex-col  items-end mr-4">
+      <div className="flex space-x-4"></div>
+    </main>
+    <div className="bg-white p-4 border-2 border-black flex items-start ">
+      <div className="mr-4 ">
+        <img src="/work-svgrepo-com.svg" alt="work" width={25} />
+      </div>
+      <div className="flex-grow min-w-0">
+        <h2 className="text-xl font-bold">{job.companyName} - {job.name}</h2>
+        <p className="text-black max-w-[40ch]">{job.description}</p>
+        <p>Location: {job.location}</p>
+        <p>Salary: {job.salary}$</p>
+        <div className="flex gap-2 mt-2">
+          <button className="border">ipsum</button>
+          <button className="border">dolar</button>
+          <button className="border">ipsum</button>
+        </div>
+      </div>
+      <div className="flex flex-col space-y-2 ">
+        <CustomButton label="Detail" onClick={() => {}} />
+        <CustomButton label="Withdraw" onClick={handleWithdraw} textColor="black" buttonColor="white" />
       </div>
     </div>
-    <div className="flex flex-col space-y-2">
-      <CustomButton label="Detail" onClick={() => {}} />
-      <CustomButton label="Withdraw" onClick={handleWithdraw} textColor="black" buttonColor="white" />
-    </div>
-  </div>
   </>
   );
 };
