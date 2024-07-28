@@ -1,3 +1,5 @@
+
+import axios from 'axios';
 import { API_BASE_URL } from './index';
 
 export interface Job {
@@ -11,12 +13,15 @@ export interface Job {
 
 export const fetchJobListings = async (): Promise<Job[]> => {
   try {
-    const response = await API_BASE_URL.get('/jobs');
-    console.log('API Response:', response.data);
+    const response = await axios.get('https://novel-project-ntj8t.ampt.app/api/jobs',{
+    headers:{
+    Authorization:"Berarer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwZmZkZjQ2LWFhMTQtNGRmMS1hZjBhLThmZjc3N2M2YmVmYi0xNzE4MTA2MDQzOTU1IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzIyMTg2MzU2LCJleHAiOjE3MjIxODg3NTZ9.NQm6nuyw1o_O5aEj68o5XdJ7Cav3uh-wzwQ-c73tQI4"
+    },}) ;
+    console.log('API Response:KDJSKSDJHKSJDGJKHGSDKJG', response);
     if (response.status !== 200) {
       throw new Error('Failed to fetch job listings');
     }
-    return response.data.data; // API cevabında data dizisini aldığınızdan emin olun
+    return response.data.data; 
   } catch (error) {
     console.error('Error fetching job listings:', error);
     throw new Error('No jobs found or incorrect data format');
@@ -40,3 +45,6 @@ export const withdrawApplication = async (jobId: string): Promise<void> => {
     throw new Error('Failed to withdraw application');
   }
 };
+
+
+

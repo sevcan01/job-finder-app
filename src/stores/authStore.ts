@@ -1,18 +1,36 @@
 import create from 'zustand';
 
 interface AuthState {
-  user: { email: string } | null;
-  login: (email: string, password: string) => void;
-  logout: () => void;
+  accessToken: string | null;
+  setAccessToken: (token: string) => void;
+  clearAccessToken: () => void;
+  login: (email: string, password: string) => Promise<void>;
 }
 
 const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  login: (email, password) => {
-    // API çağrısı burada gerçekleştir
-    set({ user: { email } });
+  accessToken: null,
+  setAccessToken: (token: string) => set({ accessToken: token }),
+  clearAccessToken: () => set({ accessToken: null }),
+  login: async (email: string, password: string) => {
+    try {
+      const response = await fetch('https://novel-project-ntj8t.ampt.app/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+
+      const data = await response.json();
+      set({ accessToken: data.accessToken });
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   },
-  logout: () => set({ user: null }),
 }));
 
 export default useAuthStore;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { applyForJob } from '../../api/job';
+import { applyForJob, withdrawApplication } from '../../api/job'; // API fonksiyonlarını içe aktarın
 
 interface JobItemProps {
   job: {
@@ -22,19 +22,35 @@ const JobItem: React.FC<JobItemProps> = ({ job }) => {
     }
   };
 
+  const handleWithdraw = async () => {
+    try {
+      await withdrawApplication(job.id);
+      alert('Application withdrawn successfully!');
+    } catch (error) {
+      alert('Failed to withdraw application.');
+    }
+  };
+
   return (
-    <div className="bg-white p-4 rounded shadow">
-      <h2 className="text-xl font-bold">{job.name}</h2>
-      <p className="text-gray-700">{job.companyName}</p>
-      <p className="text-gray-700">{job.location}</p>
+    <div className="bg-white p-4 rounded shadow mb-4">
+      <h2 className="text-xl font-bold">{job.companyName} - {job.name}</h2>
       <p className="text-gray-600">{job.description}</p>
-      <p className="text-gray-600">Salary: {job.salary}</p>
-      <button 
-        onClick={handleApply}
-        className="mt-2 bg-blue-500 text-white py-1 px-4 rounded"
-      >
-        Apply
-      </button>
+      <p>Location: {job.location}</p>
+      <p>Salary: {job.salary}$</p>
+      <div className="flex space-x-4 mt-4">
+        <button 
+          onClick={handleApply}
+          className="bg-green-500 text-white py-2 px-4 rounded"
+        >
+          Apply
+        </button>
+        <button 
+          onClick={handleWithdraw}
+          className="bg-red-500 text-white py-2 px-4 rounded"
+        >
+          Withdraw
+        </button>
+      </div>
     </div>
   );
 };
