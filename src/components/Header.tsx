@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ onSubmit, register }) => {
       <form onSubmit={onSubmit} className="ml-auto flex items-center w-full bg-white p-2 rounded mr-2">
         <input
           {...register('query')}
-          type="text"
+          type="search"
           placeholder="https://"
           className="flex-grow border-none outline-none h-3"
         />

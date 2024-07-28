@@ -15,7 +15,7 @@ export const fetchJobListings = async (): Promise<Job[]> => {
   try {
     const response = await axios.get('https://novel-project-ntj8t.ampt.app/api/jobs',{
     headers:{
-    Authorization:"Berarer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwZmZkZjQ2LWFhMTQtNGRmMS1hZjBhLThmZjc3N2M2YmVmYi0xNzE4MTA2MDQzOTU1IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzIyMTg2MzU2LCJleHAiOjE3MjIxODg3NTZ9.NQm6nuyw1o_O5aEj68o5XdJ7Cav3uh-wzwQ-c73tQI4"
+    Authorization:"Berarer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwZmZkZjQ2LWFhMTQtNGRmMS1hZjBhLThmZjc3N2M2YmVmYi0xNzE4MTA2MDQzOTU1IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzIyMTg5MTU3LCJleHAiOjE3MjIxOTE1NTd9.7dxO7ygiaEv0tE8E0CxPYxSlomEm0OJ7DtTnOooa1Ew"
     },}) ;
     console.log('API Response:KDJSKSDJHKSJDGJKHGSDKJG', response);
     if (response.status !== 200) {

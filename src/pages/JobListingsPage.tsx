@@ -29,10 +29,32 @@ const JobListingsPage: React.FC = () => {
   return (
     <>
       <Header onSubmit={handleSubmit(onSubmit)} register={register} />
-      <div className="min-h-screen bg-gray-100">
-        <div className=" mx-auto">
-          <div className="flex">
-            <div className="w-3/4">
+     
+      <div className="min-h-screen ">
+      
+          <div className="flex  ">
+            <div className=" ">
+            <main className="flex flex-col bg-white  mt-5 mb-5 mr-4">
+        <div className="flex text-2xl p-4 bg-red-500">
+          ACME
+        </div>
+      </main>
+      <div className="p-4 bg-gray-200 border rounded">
+      <div className="flex items-center space-x-4">
+        <span className="font-bold">Basic Filter</span>
+        <select className="border p-2 rounded">
+          <option>Select a Field</option>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+        </select>
+        <input
+          type="text"
+          placeholder="Search"
+          className="border p-1 rounded "
+        />
+      </div>
+    </div>
               {jobListings.map((job) => (
                 <JobItem key={job.id} job={job} />
               ))}
@@ -41,7 +63,7 @@ const JobListingsPage: React.FC = () => {
               Right side
             </div>
           </div>
-        </div>
+
       </div>
     </>
   );
