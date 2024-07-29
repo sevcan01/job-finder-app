@@ -1,42 +1,18 @@
 import React, { useState } from 'react';
 import CustomButton from '../CustomButton';
-import { applyForJob, withdrawApplication } from '../../api/job';
+import { Job } from '../../api/job';
 import DetailModal from './JobDetailModal';
 
 
-interface Job {
-  id: string;
-  name: string;
-  companyName: string;
-  location: string;
-  description: string;
-  salary: number;
-}
-
 interface JobItemProps {
   job: Job;
+  handleApply: (job: Job) => void;
+  handleWithdraw: (jobId: string) => void;
+  isApplied: boolean;
 }
 
-const JobItem: React.FC<JobItemProps> = ({ job }) => {
+const JobItem: React.FC<JobItemProps> = ({ job, handleApply, handleWithdraw,isApplied }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const handleApply = async () => {
-    try {
-      await applyForJob(job.id);
-      alert('Application submitted successfully!');
-    } catch (error) {
-      alert('Failed to apply for job.');
-    }
-  };
-
-  const handleWithdraw = async () => {
-    try {
-      await withdrawApplication(job.id);
-      alert('Application withdrawn successfully!');
-    } catch (error) {
-      alert('Failed to withdraw application.');
-    }
-  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -64,10 +40,11 @@ const JobItem: React.FC<JobItemProps> = ({ job }) => {
       </div>
       <div className="flex flex-col space-y-2">
         <CustomButton label="Detail" onClick={handleOpenModal} />
-        <CustomButton label="Withdraw" onClick={handleWithdraw} textColor="black" buttonColor="white" />
+        {!isApplied && <CustomButton label="Apply" onClick={() => handleApply(job)} />}
+        {isApplied && <CustomButton label="Withdraw" onClick={() => handleWithdraw(job.id)} textColor="black" buttonColor="white" />}
       </div>
 
-      <DetailModal isOpen={isModalOpen} onRequestClose={handleCloseModal} job={job} />
+      <DetailModal isOpen={isModalOpen} onRequestClose={handleCloseModal} job={job} handleApply={handleApply} handleWithdraw={handleWithdraw} />
     </div>
   );
 };

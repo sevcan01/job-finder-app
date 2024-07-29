@@ -1,36 +1,21 @@
-import create from 'zustand';
 
-interface AuthState {
-  accessToken: string | null;
-  setAccessToken: (token: string) => void;
-  clearAccessToken: () => void;
-  login: (email: string, password: string) => Promise<void>;
+import {create} from 'zustand';
+import { Job } from '../api/job';
+
+interface JobStore {
+  appliedJobs: Job[];
+  applyForJob: (job: Job) => void;
+  withdrawJob: (jobId: string) => void;
 }
 
-const useAuthStore = create<AuthState>((set) => ({
-  accessToken: null,
-  setAccessToken: (token: string) => set({ accessToken: token }),
-  clearAccessToken: () => set({ accessToken: null }),
-  login: async (email: string, password: string) => {
-    try {
-      const response = await fetch('https://novel-project-ntj8t.ampt.app/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
-
-      const data = await response.json();
-      set({ accessToken: data.accessToken });
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
-  },
+export const useJobStore = create<JobStore>((set) => ({
+  appliedJobs: [],
+  applyForJob: (job) =>
+    set((state) => ({
+      appliedJobs: [...state.appliedJobs, job],
+    })),
+  withdrawJob: (jobId) =>
+    set((state) => ({
+      appliedJobs: state.appliedJobs.filter((job) => job.id !== jobId),
+    })),
 }));
-
-export default useAuthStore;

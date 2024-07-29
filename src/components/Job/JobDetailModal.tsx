@@ -7,9 +7,12 @@ interface DetailModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   job: Job
+  handleWithdraw: (jobId: string) => void;
+  handleApply: (job: Job) => void;
 }
 
-const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onRequestClose, job }) => {
+
+const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onRequestClose, job,handleApply  }) => {
     
   return (
     <Modal
@@ -47,7 +50,8 @@ const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onRequestClose, job }
           </div>
           <div className='flex gap-5 justify-center p-2'>
             <CustomButton label='Close' onClick={onRequestClose} buttonColor='white' textColor='black'/>
-            <CustomButton label='Apply' onClick={()=>{}} buttonColor='black' textColor='white'/>
+            <CustomButton label="Apply"  onClick={() => handleApply(job)} textColor="black" buttonColor="white" />
+
           </div>
 
         </div>
