@@ -1,12 +1,10 @@
-
-
-
-
 import { create } from 'zustand';
 import { Job } from '../api/job';
 
 interface JobStore {
   appliedJobs: Job[];
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
   applyForJob: (job: Job) => void;
   withdrawJob: (jobId: string) => void;
 }
@@ -21,6 +19,8 @@ interface AuthState {
 
 export const useJobStore = create<JobStore>((set) => ({
   appliedJobs: [],
+  searchQuery: '',
+  setSearchQuery: (query) => set({ searchQuery: query }),
   applyForJob: (job) =>
     set((state) => ({
       appliedJobs: [...state.appliedJobs, job],

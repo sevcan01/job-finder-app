@@ -1,16 +1,12 @@
 import React from 'react';
-import { UseFormRegister } from 'react-hook-form';
 
-interface SearchFormInputs {
-  query: string;
-}
 
 interface HeaderProps {
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
-  register: UseFormRegister<SearchFormInputs>;
+
 }
 
-const Header: React.FC<HeaderProps> = ({ onSubmit, register }) => {
+const Header: React.FC<HeaderProps> = ({ onSubmit }) => {
   return (
     <header className="bg-[#9d9a9a] w-full shadow p-4 flex items-center border-b-2 border-black">
       <div className="flex items-center space-x-2">
@@ -31,8 +27,8 @@ const Header: React.FC<HeaderProps> = ({ onSubmit, register }) => {
       </div>
       <form onSubmit={onSubmit} className="ml-auto flex items-center w-full bg-white p-2 rounded mr-2">
         <input
-          {...register('query')}
-          type="search"
+
+          type="text"
           placeholder="https://"
           className="flex-grow border-none outline-none h-3"
         />

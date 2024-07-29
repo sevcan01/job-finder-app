@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+
 import LoginModal from '../components/Auth/LoginModal';
 import SignUpModal from '../components/Auth/SignUpModal';
-import Header from '../components/Header';
+// import Header from '../components/Header';
 
 import CustomButton from '../components/CustomButton';
 
-interface SearchFormInputs {
-  query: string;
-}
+
 
 const HomePage: React.FC = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
 
-  const { register, handleSubmit } = useForm<SearchFormInputs>();
 
-  const onSubmit: SubmitHandler<SearchFormInputs> = (data) => {
-    console.log(data.query);
-  };
+
+ 
 
   const openLoginModal = () => setIsLoginModalOpen(true);
   const closeLoginModal = () => setIsLoginModalOpen(false);
@@ -28,7 +24,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <Header onSubmit={handleSubmit(onSubmit)} register={register} />
+      {/* <Header onSubmit={handleSubmit(onSubmit)} register={register} /> */}
       <main className="flex flex-col bg-white items-end mt-5 mb-5 mr-4">
         <div className="flex space-x-4 mb-1">
           <CustomButton onClick={openLoginModal} buttonColor="white" textColor="black" label="Login" width="100px"/>

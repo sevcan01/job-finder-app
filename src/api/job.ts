@@ -1,5 +1,3 @@
-
-
 import { api } from './index';
 
 export interface Job {
@@ -10,14 +8,13 @@ export interface Job {
   description: string;
   salary: number;
   createdAt: string;
-  keywords:string[]
+  keywords: string[];
 }
 
 export const fetchJobListings = async (): Promise<Job[]> => {
   try {
-    const response = await api.get('/jobs',
-   ) ;
-    console.log('API Response:KDJSKSDJHKSJDGJKHGSDKJG', response);
+    const response = await api.get('/jobs');
+
     if (response.status !== 200) {
       throw new Error('Failed to fetch job listings');
     }
@@ -45,6 +42,3 @@ export const withdrawApplication = async (jobId: string): Promise<void> => {
     throw new Error('Failed to withdraw application');
   }
 };
-
-
-
