@@ -48,7 +48,7 @@
 // src/api/index.ts
 import axios from 'axios';
 
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwZmZkZjQ2LWFhMTQtNGRmMS1hZjBhLThmZjc3N2M2YmVmYi0xNzE4MTA2MDQzOTU1IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzIyMTg2MzU2LCJleHAiOjE3MjIxODg3NTZ9.NQm6nuyw1o_O5aEj68o5XdJ7Cav3uh-wzwQ-c73tQI4';
+const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwZmZkZjQ2LWFhMTQtNGRmMS1hZjBhLThmZjc3N2M2YmVmYi0xNzE4MTA2MDQzOTU1IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzIyMjE5NTg0LCJleHAiOjE3MjIyMjE5ODR9.RQcJxAQ2qRybWepd3HxrYHDX_961w91wMoRYSXEORM0';
 
 export const API_BASE_URL = axios.create({
   baseURL: 'https://novel-project-ntj8t.ampt.app/api',
