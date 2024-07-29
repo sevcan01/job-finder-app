@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import { API_BASE_URL } from './index';
+import { api } from './index';
 
 export interface Job {
   id: string;
@@ -16,7 +16,7 @@ export const fetchJobListings = async (): Promise<Job[]> => {
   try {
     const response = await axios.get('https://novel-project-ntj8t.ampt.app/api/jobs',{
     headers:{
-    Authorization:"Berarer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwZmZkZjQ2LWFhMTQtNGRmMS1hZjBhLThmZjc3N2M2YmVmYi0xNzE4MTA2MDQzOTU1IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzIyMjE5NTg0LCJleHAiOjE3MjIyMjE5ODR9.RQcJxAQ2qRybWepd3HxrYHDX_961w91wMoRYSXEORM0"
+    Authorization:"Berarer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwZmZkZjQ2LWFhMTQtNGRmMS1hZjBhLThmZjc3N2M2YmVmYi0xNzE4MTA2MDQzOTU1IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzIyMjUzMjM0LCJleHAiOjE3MjIyNTU2MzR9.9M1RhFvo3y9m-YjYTfAlsnqONPGKdPB8Ow77vN_1NQU"
     },}) ;
     console.log('API Response:KDJSKSDJHKSJDGJKHGSDKJG', response);
     if (response.status !== 200) {
@@ -31,7 +31,7 @@ export const fetchJobListings = async (): Promise<Job[]> => {
 
 export const applyForJob = async (jobId: string): Promise<void> => {
   try {
-    await API_BASE_URL.post(`/jobs/${jobId}/apply`);
+    await api.post(`/jobs/${jobId}/apply`);
   } catch (error) {
     console.error('Error applying for job:', error);
     throw new Error('Failed to apply for job');
@@ -40,7 +40,7 @@ export const applyForJob = async (jobId: string): Promise<void> => {
 
 export const withdrawApplication = async (jobId: string): Promise<void> => {
   try {
-    await API_BASE_URL.post(`/jobs/${jobId}/withdraw`);
+    await api.post(`/jobs/${jobId}/withdraw`);
   } catch (error) {
     console.error('Error withdrawing application:', error);
     throw new Error('Failed to withdraw application');

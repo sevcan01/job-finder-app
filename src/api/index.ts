@@ -48,22 +48,23 @@
 // src/api/index.ts
 import axios from 'axios';
 
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwZmZkZjQ2LWFhMTQtNGRmMS1hZjBhLThmZjc3N2M2YmVmYi0xNzE4MTA2MDQzOTU1IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzIyMjE5NTg0LCJleHAiOjE3MjIyMjE5ODR9.RQcJxAQ2qRybWepd3HxrYHDX_961w91wMoRYSXEORM0';
 
-export const API_BASE_URL = axios.create({
+export const api = axios.create({
   baseURL: 'https://novel-project-ntj8t.ampt.app/api',
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${accessToken}`,
+    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
   },
 });
 
 export const login = async (email: string, password: string) => {
-  const response = await API_BASE_URL.post('/login', { email, password });
+  const response = await api.post('/login', { email, password });
+  localStorage.setItem("refreshToken", response.data.refreshToken);
+  localStorage.setItem("accessToken",response.data.accessToken);
   return response.data;
 };
 
 export const register = async (email: string, password: string) => {
-  const response = await API_BASE_URL.post('/register', { email, password });
+  const response = await api.post('/register', { email, password });
   return response.data;
 };

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '../CustomButton';
+import { login } from '../../api';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -11,9 +12,18 @@ interface LoginModalProps {
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose }) => {
   const navigate = useNavigate();
 
-  const handleLoginSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    // Giriş işlemleri burada yapılabilir
+  const handleLoginSubmit = async(e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // @ts-ignore
+    const email =  e.target[0].value;
+     //@ts-ignore
+    const pass =  e.target[1].value;
+
+     const data = await login(email,pass)
+     console.log(data);
+  
+
     navigate('/job-listing'); // job-listing sayfasına yönlendirme
     onRequestClose(); // Modal'ı kapatma
   };
@@ -34,11 +44,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose }) => {
         <form onSubmit={handleLoginSubmit} className="space-y-4">
           <label className="block">
             <span className="text-gray-700">Email</span>
-            <input type="email" className="border border-black p-2 w-full mt-1" placeholder="hr@shft.co" />
+            <input name='email' type="email" className="border border-black p-2 w-full mt-1" placeholder="hr@shft.co" />
           </label>
           <label className="block">
             <span className="text-gray-700">Password</span>
-            <input type="password" className="border border-black p-2 w-full mt-1" placeholder="******" />
+            <input name='pass' type="password" className="border border-black p-2 w-full mt-1" placeholder="******" />
           </label>
           <div className="flex justify-center py-4">
           <CustomButton onClick={()=>{}} buttonColor="white" textColor="black" label="Login" width="200px" height='50'/>
