@@ -47,6 +47,7 @@
 
 // src/api/index.ts
 import axios from 'axios';
+import { useAuthStore } from '../stores/authStore';
 
 
 export const api = axios.create({
@@ -61,6 +62,12 @@ export const login = async (email: string, password: string) => {
   const response = await api.post('/login', { email, password });
   localStorage.setItem("refreshToken", response.data.refreshToken);
   localStorage.setItem("accessToken",response.data.accessToken);
+  const { setEmail } = useAuthStore.getState();
+  setEmail(email);
+
+
+  localStorage.setItem('email', email);
+
   return response.data;
 };
 

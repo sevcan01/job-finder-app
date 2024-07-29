@@ -11,6 +11,7 @@ interface Job {
   location: string;
   description: string;
   salary: number;
+  keywords:string[]
 
 }
 
@@ -36,22 +37,25 @@ const JobListings: React.FC<JobListingsProps> = ({ jobs, handleApply, handleWith
   const selectedJobs = jobs.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="relative pb-20">
+    <div className="relative pb-20 ">
          <div>
         {selectedJobs.map((job) => {
           const isApplied = appliedJobs.some(appliedJob => appliedJob.id === job.id);
           return (
+            <div className=' border-b-4 border-black'>
+
             <JobItem
               key={job.id}
               job={job}
               handleApply={handleApply}
               handleWithdraw={handleWithdraw}
               isApplied={isApplied} 
-            />
+              />
+              </div>
           );
         })}
       </div>
-      <div className="fixed bottom-3 bg-white px-28 py-6 z-10 flex justify-center">
+      <div className="fixed bottom-6 bg-white px-28  z-10 flex justify-center ">
       <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
       </div>
     </div>

@@ -1,5 +1,5 @@
 
-import axios from 'axios';
+
 import { api } from './index';
 
 export interface Job {
@@ -10,6 +10,7 @@ export interface Job {
   description: string;
   salary: number;
   createdAt: string;
+  keywords:string[]
 }
 
 export const fetchJobListings = async (): Promise<Job[]> => {

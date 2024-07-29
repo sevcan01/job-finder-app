@@ -23,7 +23,7 @@ const JobItem: React.FC<JobItemProps> = ({ job, handleApply, handleWithdraw,isAp
   };
 
   return (
-    <div className="bg-white p-3 border-2 border-black flex items-start">
+    <div className="bg-white p-2 flex items-start">
       <div className="mr-4">
         <img src="/work-svgrepo-com.svg" alt="work" width={25} />
       </div>
@@ -32,19 +32,19 @@ const JobItem: React.FC<JobItemProps> = ({ job, handleApply, handleWithdraw,isAp
         <p className="text-black max-w-[40ch]">{job.description}</p>
         <p>Location: {job.location}</p>
         <p>Salary: {job.salary}$</p>
-        <div className="flex gap-2 mt-2">
-          <button className="border p-1">ipsum</button>
-          <button className="border p-1">dolar</button>
-          <button className="border p-1">sit</button>
+        <div className='flex gap-1 mt-2'>
+          {job.keywords.slice(0, 3).map((keyword, index) => (
+            <button key={index} className="border p-1">{keyword}</button>
+          ))}
         </div>
       </div>
       <div className="flex flex-col space-y-2">
-        <CustomButton label="Detail" onClick={handleOpenModal} />
-        {!isApplied && <CustomButton label="Apply" onClick={() => handleApply(job)} />}
+        <CustomButton label="Detail" onClick={handleOpenModal} width='100px' />
+        {!isApplied && ''}
         {isApplied && <CustomButton label="Withdraw" onClick={() => handleWithdraw(job.id)} textColor="black" buttonColor="white" />}
       </div>
 
-      <DetailModal isOpen={isModalOpen} onRequestClose={handleCloseModal} job={job} handleApply={handleApply} handleWithdraw={handleWithdraw} />
+      <DetailModal isOpen={isModalOpen} onRequestClose={handleCloseModal} job={job} handleApply={handleApply} />
     </div>
   );
 };

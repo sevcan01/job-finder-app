@@ -1,3 +1,5 @@
+// 
+
 import React from 'react';
 
 interface ButtonProps {
@@ -7,7 +9,6 @@ interface ButtonProps {
   height?: string;
   buttonColor?: string;
   textColor?: string;
-  style?: React.CSSProperties;
 }
 
 const CustomButton: React.FC<ButtonProps> = ({ onClick, label, width = 'auto', height = 'auto', buttonColor = 'black', textColor = 'white' }) => {

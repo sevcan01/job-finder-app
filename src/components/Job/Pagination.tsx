@@ -35,8 +35,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
         style={{
           margin: '0 5px',
           padding: '5px 10px',
-          border: '1px solid black',
-          borderRadius: '4px',
+          
         }}
       >
         Previous
@@ -48,8 +47,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
         style={{
           margin: '0 5px',
           padding: '5px 10px',
-          border: '1px solid black',
-          borderRadius: '4px',
+        
         }}
       >
         Next
