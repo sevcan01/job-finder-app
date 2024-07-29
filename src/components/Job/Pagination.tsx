@@ -1,3 +1,4 @@
+// src/components/Pagination.tsx
 import React, { useState } from 'react';
 
 interface PaginationProps {
@@ -7,28 +8,20 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPageChange }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const handleToggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const handleSelectPage = (page: number) => {
-    setIsDropdownOpen(false);
-    onPageChange(page);
-  };
-
+  const [showOptions, setShowOptions] = useState(false);
+  
   const pages = [];
+
   for (let i = 1; i <= totalPages; i++) {
     pages.push(
       <button
         key={i}
-        onClick={() => handleSelectPage(i)}
+        onClick={() => onPageChange(i)}
         style={{
           fontWeight: currentPage === i ? 'bold' : 'normal',
           margin: '0 5px',
           padding: '5px 10px',
-          border: '2px solid black', // Border kalınlığı ayarı
+          border: '2px solid black',
           borderRadius: '4px',
         }}
       >
@@ -38,35 +31,43 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
   }
 
   return (
-    <div className="flex flex-col items-center mt-4 ">
-      <div className="flex justify-center items-center">
-        <button
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="mx-2 p-2 border-2 border-black" // Border kalınlığı ayarı
-        >
-          Previous
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop:35 }}>
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        style={{
+          margin: '0 5px',
+          padding: '5px 10px',
+          border: '2px solid black',
+        }}
+      >
+        Previous
+      </button>
+      {pages}
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        style={{
+          margin: '0 5px',
+          padding: '5px 10px',
+          border: '2px solid black',
+        }}
+      >
+        Next
+      </button>
+      <div style={{ marginLeft: '25px', position: 'relative' }}>
+        <button onClick={() => setShowOptions(!showOptions)} style={{ border: '2px solid black', padding: '5px 10px' }}>
+          Show {`${currentPage} / ${totalPages}`}
         </button>
-        <div className="relative ">
-          <button
-            onClick={handleToggleDropdown}
-            className="mx-2 p-2 border-2 border-black" // Border kalınlığı ayarı
-          >
-            Show {`${currentPage} / ${totalPages}`}
-          </button>
-          {isDropdownOpen && (
-            <div className="absolute top-8 left-0 bg-white border-2 border-black rounded shadow-md p-2 z-10">
-              {pages}
-            </div>
-          )}
-        </div>
-        <button
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className="mx-2 p-2 border-2 border-black" // Border kalınlığı ayarı
-        >
-          Next
-        </button>
+        {showOptions && (
+          <div style={{ position: 'absolute', top: '100%', left: 0, backgroundColor: 'white', border: '2px solid black', zIndex: 1 }}>
+            {pages.map((page) => (
+              <div key={page.key} onClick={() => setShowOptions(false)}>
+                {page}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

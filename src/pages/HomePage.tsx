@@ -25,7 +25,11 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       {/* <Header onSubmit={handleSubmit(onSubmit)} register={register} /> */}
-      <main className="flex flex-col bg-white items-end mt-5 mb-5 mr-4">
+      <main className="flex justify-between bg-white items-end mt-5 mb-5 mr-4">
+        <div className='ml-10'>
+
+        <p className="mt-2 text-xl">ACME</p>
+        </div>
         <div className="flex space-x-4 mb-1">
           <CustomButton onClick={openLoginModal} buttonColor="white" textColor="black" label="Login" width="100px"/>
           <CustomButton onClick={openSignUpModal} buttonColor="black" textColor="white" label="Sign Up" width="100px" />

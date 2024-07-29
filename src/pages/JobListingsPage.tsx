@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchJobListings, Job, applyForJob as apiApplyForJob, withdrawApplication as apiWithdrawApplication } from '../api/job';
 import JobListings from '../components/Job/JobListings';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuthStore, useJobStore } from '../stores/authStore';
 import { useNavigate } from 'react-router-dom';
+import FilterForm from '../components/FilterForm';
+// import Header from '../components/Header';
+import AppliedJobs from '../components/Job/AppliedJobs';
+
 
 interface SearchFormInputs {
   query: string;
@@ -17,10 +21,18 @@ const JobListingsPage: React.FC = () => {
     queryFn: fetchJobListings,
   });
 
-  const { register, handleSubmit } = useForm<SearchFormInputs>();
+  const { register, handleSubmit, watch } = useForm<SearchFormInputs>();
   const { appliedJobs, applyForJob, withdrawJob, searchQuery, setSearchQuery } = useJobStore();
   const { email, profileImage, clearAuth } = useAuthStore();
   const navigate = useNavigate();
+
+  const watchedQuery = watch('query');
+
+  useEffect(() => {
+    if (watchedQuery !== undefined) {
+      setSearchQuery(watchedQuery);
+    }
+  }, [watchedQuery, setSearchQuery]);
 
   const onSubmit: SubmitHandler<SearchFormInputs> = (data) => {
     setSearchQuery(data.query);
@@ -39,7 +51,7 @@ const JobListingsPage: React.FC = () => {
     try {
       await apiApplyForJob(job.id);
       applyForJob(job);
-      onRequestClose(); // İşleme başarılı olduktan sonra modalı kapat
+      onRequestClose();
     } catch (error) {
       console.error('Failed to apply for job:', error);
     }
@@ -61,66 +73,35 @@ const JobListingsPage: React.FC = () => {
     job.name.toLowerCase().includes(searchQuery.toLowerCase())
   ) ?? [];
 
-  if (jobListings.length === 0) return <div>No jobs found</div>;
-
   return (
     <div className="relative min-h-screen flex flex-col overflow-hidden">
+      {/* <Header email={email} profileImage={profileImage} handleLogout={handleLogout} /> */}
       <div className="flex flex-grow overflow-hidden">
         <div className="w-full md:w-4/5 h-full overflow-y-auto border-r-2 border-black">
           <main className="flex flex-col bg-white border-b-2 border-black">
-            <div className="flex justify-between p-5 items-center border-b-2 border-black">
+            <div className="flex justify-between p-4 items-center border-b-2 border-black">
               <p>ACME</p>
               <div className="flex items-center gap-4">
                 <a className="underline text-blue-600" href="#">Job List</a>
-                <a href="#" onClick={handleLogout}>Logout</a>
+                <a className="underline" href="#" onClick={handleLogout}>Logout</a>
                 <div className="flex items-center gap-2">
                   <p>{email}</p>
-                  {profileImage && <img src={profileImage} alt="Profile" className="w-8 h-8 rounded-full border-2 border-black" />}
+                  {profileImage ?( <img src={profileImage} alt="Profile" className="w-6 h-6 rounded-full border-2 border-black" />):(<div className='w-7 h-7  border-2 border-black rounded-full mb-2' />)}
                 </div>
               </div>
             </div>
           </main>
-          <div className="p-2 bg-gray-200 border-b-4 border-black">
-            <form onSubmit={handleSubmit(onSubmit)} className="flex items-center space-x-4">
-              <span className="ml-3 font-bold">Basic Filter</span>
-              <select className="border-2 border-black p-2 rounded" {...register('filterField')}>
-                <option value="">Select a Field</option>
-                <option value="name">Job Name</option>
-                <option value="companyName">Company Name</option>
-                <option value="location">Location</option>
-              </select>
-              <input
-                type="text"
-                placeholder="Search"
-                className="border-2 border-black p-1 rounded"
-                {...register('query')}
-              />
-              <button type="submit" className="p-1 bg-white rounded-full">
-                <img src="/path-to-search-icon.svg" width={30} alt="Search" />
-              </button>
-            </form>
-          </div>
-          <JobListings jobs={jobListings} handleApply={handleApply} handleWithdraw={handleWithdraw} appliedJobs={appliedJobs} />
+          <FilterForm register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} />
+          {jobListings.length > 0 ? (
+            <JobListings jobs={jobListings} handleApply={handleApply} handleWithdraw={handleWithdraw} appliedJobs={appliedJobs} />
+          ) : (
+            <div className="flex justify-center items-center h-full">
+              <p className="text-xl font-bold">No jobs found</p>
+            </div>
+          )}
         </div>
         <div className="hidden md:block md:w-2/5 overflow-y-auto bg-white p-4 border-l-4 border-black">
-          <div className="flex flex-col items-center mt-10">
-            {profileImage ? (
-              <img src={profileImage} alt="Profile" className="w-16 h-16 rounded-full border-2 border-black mb-2" />
-            ) : (
-              <div className='w-16 h-16 border-2 border-black rounded-full mb-2' />
-            )}
-            <p>{email}</p>
-          </div>
-          <h2 className="text-xl text-center font-bold mb-4">Applied Jobs</h2>
-          <div className="w-full h-full overflow-y-auto">
-            {appliedJobs.map(job => (
-              <div key={job.id} className="bg-gray-100 p-4 mb-4 border-2 border-black">
-                <h3 className="font-bold text-center">{job.name}</h3>
-                <p><strong>Company Name :</strong> {job.name}</p>
-                <p><strong>Location: </strong> {job.location}</p>
-              </div>
-            ))}
-          </div>
+          <AppliedJobs appliedJobs={appliedJobs} handleWithdraw={handleWithdraw} profileImage={profileImage} email={email} />
         </div>
       </div>
       <div className="fixed bottom-0 left-0 w-full z-10">
