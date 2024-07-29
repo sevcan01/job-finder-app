@@ -10,7 +10,7 @@ interface ButtonProps {
   style?: React.CSSProperties;
 }
 
-const CustomButton: React.FC<ButtonProps> = ({ onClick, label, width = 'auto', height = 'auto', buttonColor = 'black', textColor = 'white' ,style}) => {
+const CustomButton: React.FC<ButtonProps> = ({ onClick, label, width = 'auto', height = 'auto', buttonColor = 'black', textColor = 'white' }) => {
   return (
     <div className="relative inline-block" style={{ width }}>
       <button
