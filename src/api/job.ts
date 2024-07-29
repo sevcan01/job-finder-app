@@ -14,10 +14,8 @@ export interface Job {
 
 export const fetchJobListings = async (): Promise<Job[]> => {
   try {
-    const response = await axios.get('https://novel-project-ntj8t.ampt.app/api/jobs',{
-    headers:{
-    Authorization:"Berarer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwZmZkZjQ2LWFhMTQtNGRmMS1hZjBhLThmZjc3N2M2YmVmYi0xNzE4MTA2MDQzOTU1IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzIyMjUzMjM0LCJleHAiOjE3MjIyNTU2MzR9.9M1RhFvo3y9m-YjYTfAlsnqONPGKdPB8Ow77vN_1NQU"
-    },}) ;
+    const response = await api.get('/jobs',
+   ) ;
     console.log('API Response:KDJSKSDJHKSJDGJKHGSDKJG', response);
     if (response.status !== 200) {
       throw new Error('Failed to fetch job listings');
