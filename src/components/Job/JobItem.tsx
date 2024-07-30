@@ -22,11 +22,11 @@ const JobItem: React.FC<JobItemProps> = ({ job, handleApply, handleWithdraw, isA
   };
 
   return (
-    <div className="bg-white p-5 border-b-4 border-black flex flex-col md:flex-row items-start">
-      <div className="mr-4 mb-4 md:mb-0">
+    <div className=" p-5 border-2 border-black flex flex-col md:flex-row items-start">
+      <div className="mr-4 mb-4 md:mb-0 ">
         <img src="/work-svgrepo-com.svg" alt="work" width={25} />
       </div>
-      <div className="flex-grow min-w-0 mb-4 md:mb-0">
+      <div className="flex-grow min-w-0 mb-4 md:mb-0 ">
         <h2 className="text-xl font-bold">{job.companyName} - {job.name}</h2>
         <p className="text-black max-w-[40ch]">{job.description}</p>
         <p>Location: {job.location}</p>

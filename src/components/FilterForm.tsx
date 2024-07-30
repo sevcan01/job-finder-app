@@ -14,7 +14,7 @@ interface FilterFormProps {
 
 const FilterForm: React.FC<FilterFormProps> = ({ register, handleSubmit, onSubmit }) => {
   return (
-    <div className="p-2 bg-gray-200 border-b-4 border-black">
+    <div className="p-2 bg-gray-200 border-2 border-black">
       <form onSubmit={handleSubmit(onSubmit)} className="flex items-center space-x-4">
         <span className="ml-3 font-bold">Basic Filter</span>
         <select className="border-2 border-black p-1 rounded" {...register('filterField')}>

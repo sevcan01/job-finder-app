@@ -1,6 +1,10 @@
+
+
+
 import React, { useState } from 'react';
 import JobItem from './JobItem';
 import Pagination from './Pagination';
+
 
 interface Job {
   id: string;
@@ -33,23 +37,25 @@ const JobListings: React.FC<JobListingsProps> = ({ jobs, handleApply, handleWith
   const selectedJobs = jobs.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="relative pb-20 ">
-      <div>
-        {selectedJobs.map((job) => {
-          const isApplied = appliedJobs.some(appliedJob => appliedJob.id === job.id);
-          return (
-            <JobItem
-              key={job.id}
-              job={job}
-              handleApply={handleApply}
-              handleWithdraw={handleWithdraw}
-              isApplied={isApplied}
-            />
-          );
-        })}
-      </div>
-        <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
-      <div className="fixed bottom-9 left-1/2  px-24 z-10 flex justify-start w-full">
+    <div className="relative h-full flex flex-col justify-between">
+    
+        <div>
+          {selectedJobs.map((job) => {
+            const isApplied = appliedJobs.some(appliedJob => appliedJob.id === job.id);
+            return (
+              <JobItem
+                key={job.id}
+                job={job}
+                handleApply={handleApply}
+                handleWithdraw={handleWithdraw}
+                isApplied={isApplied}
+              />
+            );
+          })}
+        </div>
+      
+      <div className="p-6 border-2 border-black ">
+        <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange}/>
       </div>
     </div>
   );

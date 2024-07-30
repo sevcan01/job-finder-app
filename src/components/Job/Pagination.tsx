@@ -1,4 +1,4 @@
-// src/components/Pagination.tsx
+
 import React, { useState } from 'react';
 
 interface PaginationProps {
@@ -20,7 +20,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
         style={{
           fontWeight: currentPage === i ? 'bold' : 'normal',
           margin: '0 5px',
-          padding: '5px 10px',
+          padding: '0 5px',
           border: '2px solid black',
           borderRadius: '4px',
         }}
@@ -31,14 +31,14 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop:35 }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         style={{
           margin: '0 5px',
           padding: '5px 10px',
-          border: '2px solid black',
+
         }}
       >
         Previous
@@ -50,13 +50,13 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
         style={{
           margin: '0 5px',
           padding: '5px 10px',
-          border: '2px solid black',
+
         }}
       >
         Next
       </button>
       <div style={{ marginLeft: '25px', position: 'relative' }}>
-        <button onClick={() => setShowOptions(!showOptions)} style={{ border: '2px solid black', padding: '5px 10px' }}>
+        <button onClick={() => setShowOptions(!showOptions)} style={{  padding: '5px 10px' }}>
           Show {`${currentPage} / ${totalPages}`}
         </button>
         {showOptions && (

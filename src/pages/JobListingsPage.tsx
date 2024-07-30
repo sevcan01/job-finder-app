@@ -6,9 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuthStore, useJobStore } from '../stores/authStore';
 import { useNavigate } from 'react-router-dom';
 import FilterForm from '../components/FilterForm';
-// import Header from '../components/Header';
 import AppliedJobs from '../components/Job/AppliedJobs';
-
 
 interface SearchFormInputs {
   query: string;
@@ -74,34 +72,41 @@ const JobListingsPage: React.FC = () => {
   ) ?? [];
 
   return (
-    <div className="relative min-h-screen flex flex-col overflow-hidden">
-      {/* <Header email={email} profileImage={profileImage} handleLogout={handleLogout} /> */}
-      <div className="flex flex-grow overflow-hidden">
-        <div className="w-full md:w-4/5 h-full overflow-y-auto border-r-2 border-black">
-          <main className="flex flex-col bg-white border-b-2 border-black">
-            <div className="flex justify-between p-4 items-center border-b-2 border-black">
-              <p>ACME</p>
+    <div className="relative min-h-screen flex flex-col">
+      <div className="flex flex-grow">
+        <div className="w-full md:w-4/5 h-full">
+          <main className="flex flex-col border-2 border-black">
+            <div className="flex justify-between p-4 items-center">
+              <p className=' font-bold'>ACME</p>
               <div className="flex items-center gap-4">
                 <a className="underline text-blue-600" href="#">Job List</a>
                 <a className="underline" href="#" onClick={handleLogout}>Logout</a>
                 <div className="flex items-center gap-2">
                   <p>{email}</p>
-                  {profileImage ?( <img src={profileImage} alt="Profile" className="w-6 h-6 rounded-full border-2 border-black" />):(<div className='w-7 h-7  border-2 border-black rounded-full mb-2' />)}
+                  {profileImage ? (
+                    <img src={profileImage} alt="Profile" className="w-6 h-6 rounded-full border-2 border-black" />
+                  ) : (
+                    <div className='w-7 h-7 border-2 border-black rounded-full mb-2' />
+                  )}
                 </div>
               </div>
             </div>
           </main>
           <FilterForm register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} />
-          {jobListings.length > 0 ? (
-            <JobListings jobs={jobListings} handleApply={handleApply} handleWithdraw={handleWithdraw} appliedJobs={appliedJobs} />
-          ) : (
-            <div className="flex justify-center items-center h-full">
-              <p className="text-xl font-bold">No jobs found</p>
-            </div>
-          )}
+          <div className='flex flex-col h-[calc(100vh-150px)] overflow-y-scroll'>
+            {jobListings.length > 0 ? (
+              <JobListings jobs={jobListings} handleApply={handleApply} handleWithdraw={handleWithdraw} appliedJobs={appliedJobs} />
+            ) : (
+              <div className="flex justify-center items-center h-full">
+                <p className="text-xl font-bold">No jobs found</p>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="hidden md:block md:w-2/5 overflow-y-auto bg-white p-4 border-l-4 border-black">
-          <AppliedJobs appliedJobs={appliedJobs} handleWithdraw={handleWithdraw} profileImage={profileImage} email={email} />
+        <div className="hidden md:block md:w-2/5 h-screen">
+          <div className="h-full overflow-y-auto">
+            <AppliedJobs appliedJobs={appliedJobs} handleWithdraw={handleWithdraw} profileImage={profileImage} email={email} />
+          </div>
         </div>
       </div>
       <div className="fixed bottom-0 left-0 w-full z-10">
