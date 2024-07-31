@@ -1,6 +1,7 @@
-import React from 'react';
-import { UseFormRegister, UseFormHandleSubmit } from 'react-hook-form';
+import React, { useEffect } from 'react';
+import { useForm} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import useDebounce from '../hooks/useDebounce'; // useDebounce hook'unun doğru yolda olduğundan emin olun
 
 interface FilterFormInputs {
   query: string;
@@ -8,13 +9,19 @@ interface FilterFormInputs {
 }
 
 interface FilterFormProps {
-  register: UseFormRegister<FilterFormInputs>;
-  handleSubmit: UseFormHandleSubmit<FilterFormInputs>;
   onSubmit: (data: FilterFormInputs) => void;
 }
 
-const FilterForm: React.FC<FilterFormProps> = ({ register, handleSubmit, onSubmit }) => {
+const FilterForm: React.FC<FilterFormProps> = ({ onSubmit }) => {
   const { t } = useTranslation();
+  const { register, handleSubmit, watch } = useForm<FilterFormInputs>();
+
+  const watchedQuery = watch('query');
+  const debouncedQuery = useDebounce(watchedQuery, 500);
+
+  useEffect(() => {
+    onSubmit({ query: debouncedQuery, filterField: watch('filterField') });
+  }, [debouncedQuery, watch('filterField'), onSubmit]);
 
   return (
     <div className="p-2 bg-gray-200 border-2 border-black">
@@ -32,7 +39,6 @@ const FilterForm: React.FC<FilterFormProps> = ({ register, handleSubmit, onSubmi
           className="border-2 border-black rounded"
           {...register('query')}
         />
-     
       </form>
     </div>
   );
