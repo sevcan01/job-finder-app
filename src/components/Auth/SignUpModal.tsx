@@ -23,7 +23,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onRequestClose }) => 
       const data = await register(email, password);
       console.log(data);
 
-      navigate('/job-listing'); // job-listing sayfasına yönlendirme
+      navigate('/'); // job-listing sayfasına yönlendirme
       onRequestClose(); // Modal'ı kapatma
     } catch (error) {
       if (axios.isAxiosError(error)) {

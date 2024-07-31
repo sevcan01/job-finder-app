@@ -1,5 +1,12 @@
 {
   "files": [],
+  "compilerOptions": {
+    "noEmit": false,
+  },
+  "include": [
+    "src",
+    "src/i18n.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.app.json"

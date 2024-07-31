@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchJobListings, Job, applyForJob as apiApplyForJob, withdrawApplication as apiWithdrawApplication } from '../api/job';
 import JobListings from '../components/Job/JobListings';
+import Pagination from '../components/Job/Pagination';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuthStore, useJobStore } from '../stores/authStore';
 import { useNavigate } from 'react-router-dom';
 import FilterForm from '../components/FilterForm';
 import AppliedJobs from '../components/Job/AppliedJobs';
+import { useTranslation } from 'react-i18next';
+import Header from '../components/Header';
 
 interface SearchFormInputs {
   query: string;
@@ -14,6 +17,10 @@ interface SearchFormInputs {
 }
 
 const JobListingsPage: React.FC = () => {
+  const { t } = useTranslation();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const jobsPerPage = 3; // Sayfa başına gösterilecek iş ilanı sayısı
+
   const { data, error, isLoading } = useQuery<Job[]>({
     queryKey: ['jobListings'],
     queryFn: fetchJobListings,
@@ -38,12 +45,12 @@ const JobListingsPage: React.FC = () => {
 
   const handleLogout = () => {
     clearAuth();
-    navigate('/'); // Kullanıcıyı ana sayfaya yönlendir
+    navigate('/');
   };
 
   const handleApply = async (job: Job, onRequestClose: () => void) => {
     if (appliedJobs.some(appliedJob => appliedJob.id === job.id)) {
-      alert('You have already applied for this job.');
+      alert(t('you_have_already_applied'));
       return;
     }
     try {
@@ -64,55 +71,72 @@ const JobListingsPage: React.FC = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error instanceof Error) return <div>Error loading jobs: {error.message}</div>;
+  if (isLoading) return <div>{t('loading')}</div>;
+  if (error instanceof Error) return <div>{t('error_loading_jobs', { error: error.message })}</div>;
 
   const jobListings = data?.filter((job) =>
     job.name.toLowerCase().includes(searchQuery.toLowerCase())
   ) ?? [];
 
+  // Pagination hesaplamaları
+  const totalPages = Math.ceil(jobListings.length / jobsPerPage);
+  const startIndex = (currentPage - 1) * jobsPerPage;
+  const currentJobs = jobListings.slice(startIndex, startIndex + jobsPerPage);
+
   return (
-    <div className="relative min-h-screen flex flex-col">
-      <div className="flex flex-grow">
-        <div className="w-full md:w-4/5 h-full">
-          <main className="flex flex-col border-2 border-black">
-            <div className="flex justify-between p-4 items-center">
-              <p className=' font-bold'>ACME</p>
-              <div className="flex items-center gap-4">
-                <a className="underline text-blue-600" href="#">Job List</a>
-                <a className="underline" href="#" onClick={handleLogout}>Logout</a>
-                <div className="flex items-center gap-2">
-                  <p>{email}</p>
-                  {profileImage ? (
-                    <img src={profileImage} alt="Profile" className="w-6 h-6 rounded-full border-2 border-black" />
-                  ) : (
-                    <div className='w-7 h-7 border-2 border-black rounded-full mb-2' />
-                  )}
-                </div>
-              </div>
-            </div>
-          </main>
-          <FilterForm register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} />
-          <div className='flex flex-col h-[calc(100vh-150px)] overflow-y-scroll'>
-            {jobListings.length > 0 ? (
-              <JobListings jobs={jobListings} handleApply={handleApply} handleWithdraw={handleWithdraw} appliedJobs={appliedJobs} />
+    <>
+      <div className='fixed w-full'>
+        <Header  />
+      </div>
+
+      <div className="flex  ">
+  <div className="w-full flex flex-col ">
+    <main className="flex flex-col border-2 border-black ">
+      <div className="flex justify-between p-5 items-center ">
+        <p className=' font-bold'>ACME</p>
+
+        <div className="flex items-center gap-4 ">
+          <a className="underline text-blue-600" href="#">{t('job_list')}</a>
+          <a className="underline" href="#" onClick={handleLogout}>{t('logout')}</a>
+          <div className="flex items-center gap-2">
+            <p>{email}</p>
+            {profileImage ? (
+              <img src={profileImage} alt={t('profile')} className="w-6 h-6 rounded-full border-2 border-black" />
             ) : (
-              <div className="flex justify-center items-center h-full">
-                <p className="text-xl font-bold">No jobs found</p>
-              </div>
+              <div className='w-7 h-7 border-2 border-black rounded-full mb-2' />
             )}
           </div>
         </div>
-        <div className="hidden md:block md:w-2/5 h-screen">
-          <div className="h-full overflow-y-auto">
-            <AppliedJobs appliedJobs={appliedJobs} handleWithdraw={handleWithdraw} profileImage={profileImage} email={email} />
-          </div>
-        </div>
       </div>
+    </main>
+    <FilterForm register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} />
+    <div className='flex flex-col flex-grow max-h-[550px] overflow-y-scroll '>
+      {currentJobs.length > 0 ? (
+        <JobListings jobs={currentJobs} handleApply={handleApply} handleWithdraw={handleWithdraw} appliedJobs={appliedJobs} />
+      ) : (
+        <div className="flex justify-center items-center h-full ">
+          <p className="text-xl font-bold">{t('no_jobs_found')}</p>
+        </div>
+      )}
+    </div>
+    <div className=" mt-20">
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
+    </div>
+  </div>
+  <div className="hidden md:block md:w-2/5 h-screen">
+    <div className="h-full overflow-y-auto mt-8">
+      <AppliedJobs appliedJobs={appliedJobs} handleWithdraw={handleWithdraw} profileImage={profileImage} email={email} />
+    </div>
+  </div>
+</div>
       <div className="fixed bottom-0 left-0 w-full z-10">
         <div className="w-full h-7 bg-[#9d9a9a] border-black border-t-4" />
       </div>
-    </div>
+    </>
   );
 };
 

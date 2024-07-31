@@ -1,74 +1,34 @@
-
-import React, { useState } from 'react';
+// src/components/Pagination.tsx
+import React from 'react';
 
 interface PaginationProps {
-  totalPages: number;
   currentPage: number;
+  totalPages: number;
   onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPageChange }) => {
-  const [showOptions, setShowOptions] = useState(false);
-  
-  const pages = [];
+const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      onPageChange(currentPage - 1);
+    }
+  };
 
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push(
-      <button
-        key={i}
-        onClick={() => onPageChange(i)}
-        style={{
-          fontWeight: currentPage === i ? 'bold' : 'normal',
-          margin: '0 5px',
-          padding: '0 5px',
-          border: '2px solid black',
-          borderRadius: '4px',
-        }}
-      >
-        {i}
-      </button>
-    );
-  }
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      onPageChange(currentPage + 1);
+    }
+  };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        style={{
-          margin: '0 5px',
-          padding: '5px 10px',
-
-        }}
-      >
+    <div className="flex justify-center items-center space-x-4 py-2">
+      <button onClick={handlePrevious} disabled={currentPage === 1}>
         Previous
       </button>
-      {pages}
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        style={{
-          margin: '0 5px',
-          padding: '5px 10px',
-
-        }}
-      >
+      <span>{currentPage} / {totalPages}</span>
+      <button onClick={handleNext} disabled={currentPage === totalPages}>
         Next
       </button>
-      <div style={{ marginLeft: '25px', position: 'relative' }}>
-        <button onClick={() => setShowOptions(!showOptions)} style={{  padding: '5px 10px' }}>
-          Show {`${currentPage} / ${totalPages}`}
-        </button>
-        {showOptions && (
-          <div style={{ position: 'absolute', top: '100%', left: 0, backgroundColor: 'white', border: '2px solid black', zIndex: 1 }}>
-            {pages.map((page) => (
-              <div key={page.key} onClick={() => setShowOptions(false)}>
-                {page}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 };
