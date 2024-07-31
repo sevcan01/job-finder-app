@@ -24,11 +24,11 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex flex-col md:flex-row justify-between items-center flex-1  mt-7">
+      <main className="flex flex-col md:flex-row justify-between items-center h-36">
         <div className='ml-10 md:mb-0'>
-          <p className=" text-xl">ACME</p>
+          <p className="mt-20 text-xl">ACME</p>
         </div>
-        <div className="flex gap-2 mr-3">
+        <div className="flex gap-2 mt-20 mr-3">
           <CustomButton onClick={openLoginModal} buttonColor="white" textColor="black" label={t('login')} width="100px" />
           <CustomButton onClick={openSignUpModal} buttonColor="black" textColor="white" label={t('signup')} width="100px" />
         </div>

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { useAuthStore } from '../stores/authStore';
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 export const api = axios.create({
-  baseURL: 'https://novel-project-ntj8t.ampt.app/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,

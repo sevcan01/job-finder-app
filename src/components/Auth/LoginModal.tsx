@@ -23,8 +23,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose, openSig
     const password = (e.target as HTMLFormElement).elements.namedItem('password') as HTMLInputElement;
 
     try {
-      const data = await login(email.value, password.value);
-      console.log(data);
+      await login(email.value, password.value);
+
       toast.dark(t('login_success'), { autoClose: 1000 });
       navigate('/job-listing');
       onRequestClose();
