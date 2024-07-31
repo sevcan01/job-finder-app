@@ -1,30 +1,45 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Job Finder App
 
-Currently, two official plugins are available:
+## Project Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Job Finder App is an application where users can view job listings, apply for jobs, and withdraw their applications. The app supports multiple languages and uses toast notifications to enhance the user experience.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- User login and registration
+- Job listings view
+- Filter job listings
+- Apply and withdraw applications for jobs
+- Language support (Turkish and English)
+- Toast notifications
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Requirements
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Node.js (v14 or higher)
+- Yarn package manager
+
+### Steps
+
+1. Clone the project:
+
+   ```sh
+   git clone https://github.com/username/job-finder-app.git
+   cd job-finder-app
+
+2. Install the necessary packages:
+   yarn install
+
+3. Create a .env file and add the following variables:
+   REACT_APP_API_BASE_URL=https://novel-project-ntj8t.ampt.app/api
+
+4. Start the application:
+    yarn dev
+
+
+
+
+
