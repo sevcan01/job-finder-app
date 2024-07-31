@@ -1,4 +1,4 @@
-// 
+
 
 import React from 'react';
 
@@ -9,15 +9,17 @@ interface ButtonProps {
   height?: string;
   buttonColor?: string;
   textColor?: string;
+  disabled?: boolean;
 }
 
-const CustomButton: React.FC<ButtonProps> = ({ onClick, label, width = 'auto', height = 'auto', buttonColor = 'black', textColor = 'white' }) => {
+const CustomButton: React.FC<ButtonProps> = ({ onClick, label, width = 'auto', height = 'auto', buttonColor = 'black', textColor = 'white' ,disabled }) => {
   return (
     <div className="relative inline-block" style={{ width }}>
       <button
         onClick={onClick}
         className={`relative z-20 inline-block font-semibold border-2 rounded`}
         style={{ width: '100%', height, backgroundColor: buttonColor, borderColor: 'black', color: textColor }}
+        disabled={disabled}
       >
         <span className="relative z-10">{label}</span>
       </button>

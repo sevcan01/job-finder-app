@@ -34,7 +34,9 @@ Job Finder App is an application where users can view job listings, apply for jo
    yarn install
 
 3. Create a .env file and add the following variables:
+
    VITE_API_BASE_URL=(your-api-base-url)
+
 
 
 4. Start the application:

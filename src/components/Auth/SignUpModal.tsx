@@ -44,8 +44,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onRequestClose, openL
   };
 
   const handleOpenLoginModal = () => {
-    onRequestClose(); // Close the SignUpModal first
-    openLoginModal(); // Then open the LoginModal
+    onRequestClose(); 
+    openLoginModal();
   };
 
   return (

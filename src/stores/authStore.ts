@@ -4,9 +4,11 @@ import { Job } from '../api/job';
 interface JobStore {
   appliedJobs: Job[];
   searchQuery: string;
+  isApplying: boolean; 
   setSearchQuery: (query: string) => void;
   applyForJob: (job: Job) => void;
   withdrawJob: (jobId: string) => void;
+  setIsApplying: (isApplying: boolean) => void;
 }
 
 interface AuthState {
@@ -20,6 +22,7 @@ interface AuthState {
 export const useJobStore = create<JobStore>((set) => ({
   appliedJobs: [],
   searchQuery: '',
+  isApplying: false, 
   setSearchQuery: (query) => set({ searchQuery: query }),
   applyForJob: (job) =>
     set((state) => ({
@@ -29,6 +32,7 @@ export const useJobStore = create<JobStore>((set) => ({
     set((state) => ({
       appliedJobs: state.appliedJobs.filter((job) => job.id !== jobId),
     })),
+  setIsApplying: (isApplying) => set({ isApplying }), 
 }));
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -48,3 +52,6 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ email: '', profileImage: '' });
   },
 }));
+
+
+

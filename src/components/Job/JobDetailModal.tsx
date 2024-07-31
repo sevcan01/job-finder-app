@@ -4,23 +4,25 @@ import CustomButton from '../CustomButton';
 import { Job } from '../../api/job';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useAuthStore, useJobStore } from '../../stores/authStore';
 
 interface DetailModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   job: Job;
-  handleApply: (job: Job) => Promise<void>;
+  handleApply: (job: Job, onRequestClose: () => void) => Promise<void>;
 }
 
 const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onRequestClose, job, handleApply }) => {
   const { t } = useTranslation();
-
+  const { email } = useAuthStore(); 
+  const { isApplying, setIsApplying } = useJobStore(); 
 
   const applyForJob = async () => {
+    setIsApplying(true); 
     try {
-      await handleApply(job);
+      await handleApply(job, onRequestClose); 
       toast.dark(t('application_successful'), { autoClose: 1000 });
-      onRequestClose();
     } catch (error) {
       if (error instanceof Error) {
         if (error.message === 'already_applied') {
@@ -31,14 +33,20 @@ const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onRequestClose, job, 
       } else {
         toast.error(t('application_failed'), { autoClose: 1000 });
       }
+    } finally {
+      setIsApplying(false); 
     }
   };
+
+  if (!email) { 
+    return null;
+  }
 
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      contentLabel={('job_detail_modal')}
+      contentLabel={t('job_detail_modal')}
       className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
       overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-50 z-40"
     >
@@ -66,8 +74,15 @@ const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onRequestClose, job, 
             <p>{job.description}</p>
           </div>
           <div className='flex gap-5 justify-center p-2'>
-            <CustomButton label={t('close')} onClick={onRequestClose} buttonColor='white' textColor='black' width='25%'/>
-            <CustomButton label={t('apply')} onClick={applyForJob} buttonColor='black' textColor='white' width='25%'/>
+            <CustomButton label={t('close')} onClick={onRequestClose} buttonColor='white' textColor='black' width='25%' />
+            <CustomButton
+              label={t('apply')}
+              onClick={applyForJob}
+              buttonColor='black'
+              textColor='white'
+              width='25%'
+              disabled={isApplying} 
+            />
           </div>
         </div>
       </div>

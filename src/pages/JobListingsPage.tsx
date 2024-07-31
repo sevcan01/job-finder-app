@@ -48,16 +48,25 @@ const JobListingsPage: React.FC = () => {
     navigate('/');
   };
 
-  const handleApply = async (job: Job) => {
+  const handleApply = async (job: Job, onRequestClose: () => void) => {
     if (appliedJobs.some(appliedJob => appliedJob.id === job.id)) {
       throw new Error('already_applied');
     }
     try {
-      await apiApplyForJob(job.id);
-      applyForJob(job);
+      await apiApplyForJob(job.id); 
+      applyForJob(job); 
+      onRequestClose(); 
     } catch (error) {
       console.error('Failed to apply for job:', error);
-      throw error;
+      if (error instanceof Error) {
+        if (error.message === 'already_applied') {
+
+        } else {
+
+        }
+      } else {
+
+      }
     }
   };
 
