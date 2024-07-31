@@ -10,6 +10,7 @@ import FilterForm from '../components/FilterForm';
 import AppliedJobs from '../components/Job/AppliedJobs';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
+import { toast } from 'react-toastify';
 
 interface SearchFormInputs {
   query: string;
@@ -50,14 +51,16 @@ const JobListingsPage: React.FC = () => {
 
   const handleApply = async (job: Job, onRequestClose: () => void) => {
     if (appliedJobs.some(appliedJob => appliedJob.id === job.id)) {
-      alert(t('you_have_already_applied'));
+      toast.warn(t('you_have_already_applied'));
       return;
     }
     try {
       await apiApplyForJob(job.id);
       applyForJob(job);
+      toast.success(t('application_successful'));
       onRequestClose();
     } catch (error) {
+      toast.error(t('application_failed'));
       console.error('Failed to apply for job:', error);
     }
   };
@@ -66,10 +69,13 @@ const JobListingsPage: React.FC = () => {
     try {
       await apiWithdrawApplication(jobId);
       withdrawJob(jobId);
+      toast.success(t('withdraw_successful'));
     } catch (error) {
+      toast.error(t('withdraw_failed'));
       console.error('Failed to withdraw application:', error);
     }
   };
+
 
   if (isLoading) return <div>{t('loading')}</div>;
   if (error instanceof Error) return <div>{t('error_loading_jobs', { error: error.message })}</div>;
@@ -110,7 +116,7 @@ const JobListingsPage: React.FC = () => {
       </div>
     </main>
     <FilterForm register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} />
-    <div className='flex flex-col flex-grow max-h-[550px] overflow-y-scroll '>
+    <div className='flex flex-col flex-grow max-h-[600px] overflow-y-scroll '>
       {currentJobs.length > 0 ? (
         <JobListings jobs={currentJobs} handleApply={handleApply} handleWithdraw={handleWithdraw} appliedJobs={appliedJobs} />
       ) : (
@@ -119,7 +125,7 @@ const JobListingsPage: React.FC = () => {
         </div>
       )}
     </div>
-    <div className=" mt-20">
+    <div className=" mt-16">
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

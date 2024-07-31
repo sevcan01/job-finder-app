@@ -34,7 +34,13 @@ const resources = {
       ready_to_get_started: "Ready to get started?",
       footer_message: "Join thousands of others who have found their ideal jobs with us. Whether you're looking for a new challenge or just starting your career, we have something for you.",
       privacy: "Privacy",
-      terms: "Terms"
+      terms: "Terms",
+      you_have_already_applied: "You have already applied for this job.",
+      application_successful: "Application successful!",
+      application_failed: "Application failed!",
+      withdraw_successful: "Withdrawal successful!",
+      withdraw_failed: "Withdrawal failed!",
+      close:"Close",
     }
   },
   tr: {
@@ -67,7 +73,13 @@ const resources = {
       ready_to_get_started: "Başlamaya hazır mısınız?",
       footer_message: "Bizimle ideal işlerini bulan binlerce kişiye katıl. Yeni bir meydan okuma arıyorsanız veya kariyerinize yeni başlıyorsanız, sizin için bir şeyimiz var.",
       privacy: "Gizlilik",
-      terms: "Şartlar"
+      terms: "Şartlar",
+      you_have_already_applied: "Bu işe zaten başvurdunuz.",
+      application_successful: "Başvuru başarılı!",
+      application_failed: "Başvuru başarısız!",
+      withdraw_successful: "Başvuru geri çekildi!",
+      withdraw_failed: "Başvuru geri çekilemedi!",
+      close:"Kapat",
     }
   }
 };
