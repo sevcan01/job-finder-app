@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import useDebounce from '../hooks/useDebounce'; // useDebounce hook'unun doğru yolda olduğundan emin olun
+import useDebounce from '../hooks/useDebounce'; 
 
 interface FilterFormInputs {
   query: string;
