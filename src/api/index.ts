@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { useAuthStore } from '../stores/authStore';
 
-const baseURL = process.env.REACT_APP_API_BASE_URL;
 export const api = axios.create({
-  baseURL: baseURL,
+  baseURL: 'https://novel-project-ntj8t.ampt.app/api',
   headers: {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,

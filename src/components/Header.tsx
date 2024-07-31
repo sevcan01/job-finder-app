@@ -1,5 +1,6 @@
 import React from 'react';
-import LanguageSwitcher from '../i18n/locales/LanguageSwitcher';
+import LanguageSwitcher from '../i18n/LanguageSwitcher';
+
 
 const Header: React.FC = () => {
   return (

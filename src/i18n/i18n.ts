@@ -21,6 +21,7 @@ const resources = {
       applied_jobs: "Applied Jobs",
       apply_job: "Apply",
       company_name: "Company Name",
+      company: "Company",
       basic_filter: "Basic Filter",
       select_field: "Select a Field",
       job_name: "Job Name",
@@ -41,6 +42,14 @@ const resources = {
       withdraw_successful: "Withdrawal successful!",
       withdraw_failed: "Withdrawal failed!",
       close:"Close",
+      registration_failed: "Registration failed: {{message}}",
+      login_failed: "Login failed: {{message}}",
+      dont_have_account: "Don’t have an account?",
+      already_have_account: "Already have an account?",
+      password: "Password",
+      email:"Email",
+      sign_up:"Sign up"
+
     }
   },
   tr: {
@@ -61,6 +70,7 @@ const resources = {
       applied_jobs: "Başvurulan İşler",
       apply_job: "Başvur",
       company_name: "Şirket Adı",
+      company:"Şirket",
       basic_filter: "Filtrele",
       select_field: "Bir Alan Seçin",
       job_name: "İş Adı",
@@ -80,6 +90,13 @@ const resources = {
       withdraw_successful: "Başvuru geri çekildi!",
       withdraw_failed: "Başvuru geri çekilemedi!",
       close:"Kapat",
+      registration_failed: "Kayıt başarısız: {{message}}",
+      login_failed: "Giriş başarısız: {{message}}",
+      dont_have_account: "Hesabınız yok mu?",
+      already_have_account: "Zaten bir hesabınız var mı?",
+      password:"Parola",
+      email:"Mail",
+      sign_up:"Kayit Ol"
     }
   }
 };

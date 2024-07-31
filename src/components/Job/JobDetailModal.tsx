@@ -3,22 +3,42 @@ import Modal from 'react-modal';
 import CustomButton from '../CustomButton';
 import { Job } from '../../api/job';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 interface DetailModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   job: Job;
-  handleApply: (job: Job, onRequestClose: () => void) => void;
+  handleApply: (job: Job) => Promise<void>;
 }
 
 const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onRequestClose, job, handleApply }) => {
   const { t } = useTranslation();
 
+
+  const applyForJob = async () => {
+    try {
+      await handleApply(job);
+      toast.dark(t('application_successful'), { autoClose: 1000 });
+      onRequestClose();
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message === 'already_applied') {
+          toast.error(t('you_have_already_applied'), { autoClose: 1000 });
+        } else {
+          toast.error(t('application_failed'), { autoClose: 1000 });
+        }
+      } else {
+        toast.error(t('application_failed'), { autoClose: 1000 });
+      }
+    }
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      contentLabel={t('job_detail_modal')}
+      contentLabel={('job_detail_modal')}
       className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
       overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-50 z-40"
     >
@@ -47,7 +67,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onRequestClose, job, 
           </div>
           <div className='flex gap-5 justify-center p-2'>
             <CustomButton label={t('close')} onClick={onRequestClose} buttonColor='white' textColor='black' width='25%'/>
-            <CustomButton label={t('apply')} onClick={() => handleApply(job, onRequestClose)} buttonColor='black' textColor='white' width='25%'/>
+            <CustomButton label={t('apply')} onClick={applyForJob} buttonColor='black' textColor='white' width='25%'/>
           </div>
         </div>
       </div>

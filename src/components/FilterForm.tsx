@@ -32,9 +32,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ register, handleSubmit, onSubmi
           className="border-2 border-black rounded"
           {...register('query')}
         />
-        <button type="submit" className="p-1 bg-white rounded-full">
-          <img src="/path-to-search-icon.svg" width={30} alt={t('search')} />
-        </button>
+     
       </form>
     </div>
   );
