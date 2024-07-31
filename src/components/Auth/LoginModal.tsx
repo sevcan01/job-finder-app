@@ -5,6 +5,7 @@ import CustomButton from '../CustomButton';
 import { login } from '../../api';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface LoginModalProps {
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose, openSignUpModal }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleLoginSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,6 +28,10 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose, openSig
       await login(email.value, password.value);
 
       toast.dark(t('login_success'), { autoClose: 1000 });
+
+      // Prefetch job listings after login
+      queryClient.invalidateQueries({ queryKey: ['jobListings'] });
+
       navigate('/job-listing');
       onRequestClose();
     } catch (error) {
@@ -35,8 +41,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose, openSig
   };
 
   const handleOpenSignUpModal = () => {
-    onRequestClose(); 
-    openSignUpModal(); 
+    onRequestClose();
+    openSignUpModal();
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchJobListings, Job, applyForJob as apiApplyForJob, withdrawApplication as apiWithdrawApplication } from '../api/job';
 import JobListings from '../components/Job/JobListings';
 import Pagination from '../components/Job/Pagination';
@@ -20,6 +20,7 @@ const JobListingsPage: React.FC = () => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const jobsPerPage = 3;
+  const queryClient = useQueryClient();
 
   const { data, error, isLoading } = useQuery<Job[]>({
     queryKey: ['jobListings'],
@@ -53,9 +54,12 @@ const JobListingsPage: React.FC = () => {
       throw new Error('already_applied');
     }
     try {
+
       await apiApplyForJob(job.id); 
       applyForJob(job); 
       onRequestClose(); 
+
+
     } catch (error) {
       console.error('Failed to apply for job:', error);
       if (error instanceof Error) {
@@ -74,6 +78,8 @@ const JobListingsPage: React.FC = () => {
     try {
       await apiWithdrawApplication(jobId);
       withdrawJob(jobId);
+      // Prefetch job listings after withdrawing
+      queryClient.invalidateQueries({ queryKey: ['jobListings'] });
     } catch (error) {
       console.error('Failed to withdraw application:', error);
     }
