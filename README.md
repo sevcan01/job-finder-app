@@ -15,6 +15,19 @@ Job Finder App is an application where users can view job listings, apply for jo
 - Language support (Turkish and English)
 - Toast notifications
 
+- ## Technologies Used
+
+- React
+- TypeScript
+- Vite
+- React Query
+- React Hook Form
+- React Router DOM
+- i18next for internationalization
+- React Toastify for notifications
+- Axios for HTTP requests
+- Tailwind CSS for styling
+
 ## Installation
 
 ### Requirements
