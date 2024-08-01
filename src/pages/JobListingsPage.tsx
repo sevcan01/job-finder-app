@@ -11,7 +11,7 @@ import AppliedJobs from '../components/Job/AppliedJobs';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 
-interface SearchFormInputs {
+export interface SearchFormInputs {
   query: string;
   filterField: string;
 }
@@ -34,15 +34,18 @@ const JobListingsPage: React.FC = () => {
 
   const watchedQuery = watch('query');
 
+
   useEffect(() => {
-    if (watchedQuery !== undefined) {
+    if (watchedQuery !== undefined && watchedQuery !== searchQuery) {
       setSearchQuery(watchedQuery);
     }
-  }, [watchedQuery, setSearchQuery]);
+  }, [watchedQuery, searchQuery, setSearchQuery]);
 
   const onSubmit: SubmitHandler<SearchFormInputs> = (data) => {
     setSearchQuery(data.query);
   };
+
+
 
   const handleLogout = () => {
     clearAuth();
@@ -54,23 +57,11 @@ const JobListingsPage: React.FC = () => {
       throw new Error('already_applied');
     }
     try {
-
-      await apiApplyForJob(job.id); 
-      applyForJob(job); 
-      onRequestClose(); 
-
-
+      await apiApplyForJob(job.id);
+      applyForJob(job);
+      onRequestClose();
     } catch (error) {
       console.error('Failed to apply for job:', error);
-      if (error instanceof Error) {
-        if (error.message === 'already_applied') {
-
-        } else {
-
-        }
-      } else {
-
-      }
     }
   };
 
@@ -78,7 +69,6 @@ const JobListingsPage: React.FC = () => {
     try {
       await apiWithdrawApplication(jobId);
       withdrawJob(jobId);
-      // Prefetch job listings after withdrawing
       queryClient.invalidateQueries({ queryKey: ['jobListings'] });
     } catch (error) {
       console.error('Failed to withdraw application:', error);

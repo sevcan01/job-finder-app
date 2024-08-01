@@ -1,27 +1,27 @@
 import React, { useEffect } from 'react';
-import { useForm} from 'react-hook-form';
+import { UseFormRegister, UseFormHandleSubmit, useForm} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import useDebounce from '../hooks/useDebounce'; 
-
-interface FilterFormInputs {
-  query: string;
-  filterField: string;
-}
+import useDebounce from '../hooks/useDebounce';
+import { SearchFormInputs } from '../pages/JobListingsPage';
 
 interface FilterFormProps {
-  onSubmit: (data: FilterFormInputs) => void;
+  onSubmit: (data: SearchFormInputs) => void;
+  register: UseFormRegister<SearchFormInputs>;
+  handleSubmit: UseFormHandleSubmit<SearchFormInputs>;
 }
 
-const FilterForm: React.FC<FilterFormProps> = ({ onSubmit }) => {
+const FilterForm: React.FC<FilterFormProps> = ({ onSubmit, register, handleSubmit }) => {
   const { t } = useTranslation();
-  const { register, handleSubmit, watch } = useForm<FilterFormInputs>();
-
+  const { watch } = useForm<SearchFormInputs>();
   const watchedQuery = watch('query');
+  const watchedFilterField = watch('filterField');
   const debouncedQuery = useDebounce(watchedQuery, 500);
 
   useEffect(() => {
-    onSubmit({ query: debouncedQuery, filterField: watch('filterField') });
-  }, [debouncedQuery, watch('filterField'), onSubmit]);
+    if (debouncedQuery !== undefined || watchedFilterField !== undefined) {
+      onSubmit({ query: debouncedQuery, filterField: watchedFilterField });
+    }
+  }, [debouncedQuery, watchedFilterField, onSubmit]);
 
   return (
     <div className="p-2 bg-gray-200 border-2 border-black">

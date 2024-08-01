@@ -6,13 +6,16 @@ import { api } from './api';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PrivateRoute from './components/PrivateRoute'; // PrivateRoute bileşenini import edin
-import Layout from './components/layout';
+import Layout from './components/Layout';
+
+
 
 
 const App: React.FC = () => {
   useEffect(() => {
     api.post("/refresh", { refreshToken: localStorage.getItem("refreshToken") })
       .then((res) => {
+
         localStorage.setItem("accessToken", res.data.accessToken);
       });
   }, []);

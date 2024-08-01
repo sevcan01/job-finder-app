@@ -46,9 +46,10 @@ const resources = {
       login_failed: "Login failed: {{message}}",
       dont_have_account: "Don’t have an account?",
       already_have_account: "Already have an account?",
-      password: "Password",
-      email:"Email",
-      sign_up:"Sign up"
+      Password: "Password",
+      Email:"Email",
+      sign_up:"Sign up",
+      login_success:"Login success"
 
     }
   },
@@ -94,9 +95,10 @@ const resources = {
       login_failed: "Giriş başarısız: {{message}}",
       dont_have_account: "Hesabınız yok mu?",
       already_have_account: "Zaten bir hesabınız var mı?",
-      password:"Parola",
-      email:"Mail",
-      sign_up:"Kayit Ol"
+      Password:"Parola",
+      Email:"Mail",
+      sign_up:"Kayit Ol",
+      login_success:"Giriş başarılı"
     }
   }
 };

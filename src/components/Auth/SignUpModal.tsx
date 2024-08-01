@@ -53,13 +53,13 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onRequestClose, openL
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Sign Up Modal"
-      className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
-      overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-50"
+      className="modal-content fixed inset-0 flex items-center justify-center z-50"
+      overlayClassName="modal-overlay fixed inset-0 bg-gray-800 bg-opacity-50 z-40"
       ariaHideApp={false}
     >
       <div className="bg-white p-8 rounded shadow-md max-w-sm w-full relative">
         <button onClick={onRequestClose} className="absolute top-4 right-4 text-black text-2xl font-bold">
-          <img src="/path-to-close-icon.svg" width={25} alt="Close" />
+          <img src="/close-icon.svg" width={25} alt="Close" />
         </button>
         <h2 className="text-2xl font-bold mb-6 text-center">{t('signup')}</h2>
         <form className="space-y-4" onSubmit={handleRegisterSubmit}>
@@ -72,7 +72,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onRequestClose, openL
             <input name="password" type="password" className="border border-black p-2 w-full mt-1" placeholder="******" />
           </label>
           <div className="flex justify-center py-4">
-            <CustomButton onClick={() => {}} buttonColor="white" textColor="black" label={t('signup')} width="200px"  />
+            <CustomButton onClick={() => {}} buttonColor="white" textColor="black" label={t('signup')} width="200px" />
           </div>
         </form>
         <div className="text-center mt-4">

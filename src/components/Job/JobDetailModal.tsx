@@ -46,7 +46,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onRequestClose, job, 
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      contentLabel={t('job_detail_modal')}
+      contentLabel={('job_detail_modal')}
       className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
       overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-50 z-40"
     >
